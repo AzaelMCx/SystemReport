@@ -1,0 +1,6 @@
+@import "foundation-sites/dist/css/foundation.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
