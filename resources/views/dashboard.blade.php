@@ -59,7 +59,7 @@
             </div>
 
             <!-- Otros contenedores (formulario de cámaras y reportes) -->
-            <div class="flex justify-center mt-4 gap-40">
+            <div class="flex justify-center mt-4 gap-20">
                 <!-- Primer contenedor con formulario -->
                 <div class="bg-gray-800 rounded-lg shadow-lg w-full md:w-1/1 lg:w-1/3 h-auto sm:h-auto p-4">
                     <h3 class="text-white text-center mb-4 text-lg ">Agregar Cámara</h3>

@@ -13,9 +13,17 @@ class ReportController extends Controller
      */
     public function index()
     {
-        // Traemos los reportes con la cámara asociada
-        $reports = Report::with('camera')->get();
-        return view('reports.index', compact('reports'));
+        // Traemos los reportes con la cámara asociada solo con el estado 'pendiente'
+        $reports = Report::with('camera')->where('status', 'pendiente')->get();
+        
+        // Verificamos si existen reportes pendientes, si no, enviamos el mensaje correspondiente
+        if ($reports->isEmpty()) {
+            $noReportsMessage = 'No hay reportes pendientes';
+        } else {
+            $noReportsMessage = null;
+        }
+
+        return view('reports.index', compact('reports', 'noReportsMessage'));
     }
 
     /**
@@ -51,5 +59,24 @@ class ReportController extends Controller
 
         // Redirigir con mensaje de éxito
         return redirect()->route('dashboard')->with('success', 'Reporte creado correctamente');
+    }
+
+    /**
+     * Actualiza el estatus de un reporte.
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        // Validar que el nuevo estado sea 'pendiente' o 'solucionado'
+        $request->validate([
+            'status' => 'required|in:pendiente,solucionado',
+        ]);
+
+        // Encontrar el reporte y actualizar su estatus
+        $report = Report::findOrFail($id);
+        $report->status = $request->status;
+        $report->save();
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('reports.index')->with('success', 'Estatus del reporte actualizado correctamente');
     }
 }
