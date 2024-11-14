@@ -69,6 +69,21 @@
         .login-button:hover {
             background-color: #e6b852;
         }
+        /* Botón de registro */
+        .register-button {
+            background-color: #4CAF50;
+            border: none;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 0.75rem;
+            width: 100%;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        .register-button:hover {
+            background-color: #45a049;
+        }
         /* Pie de página con enlace */
         .login-footer {
             text-align: center;
@@ -100,6 +115,11 @@
             
             <button type="submit" class="login-button">Iniciar Sesión</button>
         </form>
+
+        <!-- Botón de Registro -->
+        <form action="{{ route('register') }}" method="GET">
+            <button type="submit" class="register-button">Regístrate</button>
+        </form>
         
         <div class="login-footer">
             <p>¿Olvidaste tu contraseña? <a href="{{ route('password.request') }}">Recuperarla</a></p>
@@ -107,3 +127,4 @@
     </div>
 </body>
 </html>
+

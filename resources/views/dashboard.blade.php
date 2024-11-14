@@ -13,22 +13,24 @@
 
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
-            <div class="flex flex-col items-center mb-6">
-                <div><i class="fas fa-user-circle text-white fa-3x"></i></div>
-                <h3 class="text-lg font-semibold text-gray-300">Bienvenido</h3>
+            <div class="flex flex-col items-center mb-6 text-center ">
+                <div><img src="{{ asset('images/icono-user.png') }}" alt="Icono User" class="w-12 h-12 mr-3 flex items-center"></i></div> 
+                <h3 class="text-lg font-semibold text-gray-300">BIENVENIDO</h3>
                 <p class="text-xl font-bold">{{ Auth::user()->name }}</p>
             </div>
 
             <nav>
                 <ul class="space-y-4 list-none">
-                    <li><a href="{{ route('reports.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300"><i class="fas fa-chart-line mr-3"></i> Reportes</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300"><i class="fas fa-video mr-3"></i> Camaras</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300"><i class="fas fa-question-circle mr-3"></i> Ayuda</a></li>
+                    <li><a href="{{ route('reports.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-reportes.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3">Reportes</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-notification.png') }}" alt="Icono Notificaciones" class="w-7 h-7 mr-3">Notificaciones</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-history.png') }}" alt="Icono Historial" class="w-7 h-7 mr-3">Historial</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Camaras" class="w-7 h-7 mr-3">Camaras</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-profile.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3">Perfil</a></li>          
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="block py-2 px-4 rounded-lg w-full text-left text-gray-400 hover:bg-red-600 hover:text-white transition duration-300">
-                                <i class="fas fa-sign-out-alt mr-3"></i> Cerrar sesión
+                                <img src="{{ asset('images/icono-logout.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3"> Cerrar sesión
                             </button>
                         </form>
                     </li>
@@ -37,8 +39,8 @@
             
        <!-- busacador de cámaras -->
             <div class="mt-6">
-                <label for="cameraSearch" class="text-gray-400 block text-center mb-2">Buscar Cámara</label>
-                <input type="text" id="cameraSearch" class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition duration-300" placeholder="Buscar Cámara" onkeyup="searchCamera()" />
+                <label for="cameraSearch" class="text-gray-400 block text-center mb-2">Busqueda</label>
+                <input type="text" id="cameraSearch" class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition duration-300 text-center" placeholder="Buscar Cámara" onkeyup="searchCamera()" />
             </div>
             
         </aside>
@@ -46,7 +48,7 @@
         <!-- Contenido principal -->
         <div class="flex-1 p-6 w-full">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-gray-900 dark:text-gray-100 text-center">
                     {{ __("Mapa") }}
                 </div>
             </div>
@@ -62,7 +64,7 @@
             <div class="flex justify-center mt-4 gap-20">
                 <!-- Primer contenedor con formulario -->
                 <div class="bg-gray-800 rounded-lg shadow-lg w-full md:w-1/1 lg:w-1/3 h-auto sm:h-auto p-4">
-                    <h3 class="text-white text-center mb-4 text-lg ">Agregar Cámara</h3>
+                    <h3 class="text-white text-center mb-4 text-lg ">Agregar Cámara <img src="{{ asset('images/post-camera.png') }}" alt="Icono Perfil" class="w-6 h-6 mr-3"> </h3>
                     <form method="POST" action="{{ route('cameras.store') }}" class="space-y-4">
                         @csrf
                         <div>
@@ -83,7 +85,7 @@
 
                 <!-- Segundo contenedor con formulario de reportes  -->
                 <div class="bg-gray-800 rounded-lg shadow-lg w-full md:w-1/1 lg:w-1/3 h-auto sm:h-auto p-6">
-                    <h3 class="text-white text-center mb-6 text-lg ">Agregar Reporte</h3>
+                    <h3 class="text-white text-center mb-6 text-lg ">Agregar Reporte <img src="{{ asset('images/post-report.png') }}" alt="Icono Perfil" class="w-6 h-6 mr-3"> </h3>
                     <form method="POST" action="{{ route('reports.store') }}" class="space-y-5">
                         @csrf
                         <div>
@@ -127,7 +129,7 @@
     <!-- Script para inicializar el mapa -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var map = L.map('map').setView([19.3133, -98.2400], 13); // Coordenadas de Tlaxcala, México
+            var map = L.map('map').setView([19.3133, -98.2400], 15); // Coordenadas de Tlaxcala, México
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -142,7 +144,7 @@
                 var marker = L.marker([{{ $camera->latitude }}, {{ $camera->longitude }}], {
                     icon: L.icon({
                         iconUrl: '{{ $report ? asset('images/red-marker.png') : asset('images/green-marker.png') }}', // Dependiendo del reporte
-                        iconSize: [29, 29],
+                        iconSize: [40, 40],
                         iconAnchor: [12, 12],
                         popupAnchor: [0, -10]
                     })

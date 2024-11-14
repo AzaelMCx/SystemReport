@@ -15,7 +15,7 @@
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($reports as $report)
-                            <div class="bg-gray-700 rounded-lg shadow-lg p-4">
+                            <div class="bg-gray-700 rounded-lg shadow-lg p-4" ><img src="{{ asset('images/list-reports.png') }}" alt="Icono Perfil" class="w-11 h-11 mr-3 flex items-center">
                                 <h4 class="text-lg font-bold text-white">{{ $report->camera->name }}</h4>
                                 <p class="text-gray-300 mt-2"><strong>Descripción:</strong> {{ $report->description }}</p>
                                 <p class="text-gray-300 mt-2"><strong>Estatus:</strong> {{ $report->status }}</p>
@@ -29,7 +29,7 @@
                                             <option value="pendiente" {{ $report->status == 'pendiente' ? 'selected' : '' }} style="color: gray;">Pendiente</option>
                                             <option value="solucionado" {{ $report->status == 'solucionado' ? 'selected' : '' }} style="color: gray;">Solucionado</option>
                                         </select>
-                                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Actualizar</button>
+                                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Atender</button>
                                     </div>
                                 </form>
                             </div>
