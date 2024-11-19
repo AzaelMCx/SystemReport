@@ -79,4 +79,16 @@ class ReportController extends Controller
         // Redirigir con mensaje de éxito
         return redirect()->route('reports.index')->with('success', 'Estatus del reporte actualizado correctamente');
     }
+
+    public function history()
+{
+    // Traemos las cámaras con sus reportes solucionados
+    $cameras = Camera::with(['reports' => function ($query) {
+        $query->solucionados(); // Usamos el scope para solo traer los reportes solucionados
+    }])->get();
+
+    return view('history', compact('cameras'));
+}
+
+
 }

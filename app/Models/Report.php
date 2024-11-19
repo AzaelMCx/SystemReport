@@ -32,4 +32,12 @@ class Report extends Model
     {
         return $query->where('status', 'Pendiente');
     }
+
+    // En el modelo Report
+    public function scopeSolucionados($query)
+    {
+
+        return $query->where('status', 'solucionado');
+    }
+
 }

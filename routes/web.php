@@ -21,8 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('cameras', CameraController::class);
     Route::resource('reports', ReportController::class);
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::post('/reports/{id}/update-status', [ReportController::class, 'updateStatus'])->name('reports.updateStatus');
+    Route::get('/history', [ReportController::class, 'history'])->name('history');
 
+    Route::post('/reports/{id}/update-status', [ReportController::class, 'updateStatus'])->name('reports.updateStatus');
 
 });
 
