@@ -21,6 +21,7 @@
                             @if($camera->reports->isNotEmpty())
                                 <div class="bg-gray-700 p-4 rounded-lg shadow-lg">
                                     <h4 class="text-xl font-bold text-gray-300 text-center mb-4">{{ $camera->name }}</h4>
+                                    
 
                                     @foreach($camera->reports as $report)
                                         <!-- Mostrar solo reportes con estado 'solucionado' -->
@@ -29,9 +30,13 @@
                                                 <p class="text-gray-300"><strong>Problema:</strong> {{ $report->description }}</p>
                                                 <p class="text-gray-300"><strong>Fecha de reporte:</strong> {{ $report->date }}</p>
                                                 <p class="text-gray-300"><strong>Estatus:</strong> {{ $report->status }}</p>
+                                                
                                             </div>
                                         @endif
                                     @endforeach
+                                    <a href="{{ route('cameras.downloadReports', $camera->id) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                                        Descargar PDF
+                                    </a>
                                 </div>
                             @endif
                         @endforeach

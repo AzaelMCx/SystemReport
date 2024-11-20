@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\Camera;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
@@ -80,15 +81,39 @@ class ReportController extends Controller
         return redirect()->route('reports.index')->with('success', 'Estatus del reporte actualizado correctamente');
     }
 
+    /**
+     * Muestra el historial de cámaras con reportes solucionados.
+     */
     public function history()
-{
-    // Traemos las cámaras con sus reportes solucionados
-    $cameras = Camera::with(['reports' => function ($query) {
-        $query->solucionados(); // Usamos el scope para solo traer los reportes solucionados
-    }])->get();
+    {
+        // Traemos las cámaras con sus reportes solucionados
+        $cameras = Camera::with(['reports' => function ($query) {
+            $query->solucionados(); // Usamos el scope para solo traer los reportes solucionados
+        }])->get();
 
-    return view('history', compact('cameras'));
+        return view('history', compact('cameras'));
+    }
+
+    /**
+     * Genera y descarga un PDF con los reportes solucionados de una cámara específica.
+     */
+    public function downloadCameraReports($cameraId)
+    {
+        // Obtener la cámara y sus reportes solucionados
+        $camera = Camera::with(['reports' => function ($query) {
+            $query->solucionados();
+        }])->findOrFail($cameraId);
+
+        // Verificar si la cámara tiene reportes solucionados
+        if ($camera->reports->isEmpty()) {
+            return redirect()->route('history')->with('error', 'Esta cámara no tiene reportes solucionados.');
+        }
+
+        // Generar el PDF con la información
+        $pdf = Pdf::loadView('pdf.camera-reports', compact('camera'));
+
+        // Descargar el PDF
+        return $pdf->download('Reportes:' . $camera->name . '.pdf');
+    }
 }
 
-
-}

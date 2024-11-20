@@ -22,6 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('reports', ReportController::class);
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/history', [ReportController::class, 'history'])->name('history');
+    Route::get('/cameras/{id}/download-reports', [ReportController::class, 'downloadCameraReports'])
+    ->name('cameras.downloadReports');
+
+    //Route::get('/history/{camera}/download', [ReportController::class, 'downloadCameraReports'])->name('history.download');
+    //Route::get('/cameras/{id}/download-reports', [ReportController::class, 'downloadCameraReports'])->name('cameras.downloadReports');
+
+
+
 
     Route::post('/reports/{id}/update-status', [ReportController::class, 'updateStatus'])->name('reports.updateStatus');
 
