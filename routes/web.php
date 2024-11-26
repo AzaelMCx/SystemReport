@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CameraController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\DatosPostesController;
+//use App\Http\Controllers\CamerasDataController;
+
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -22,17 +26,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('reports', ReportController::class);
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/history', [ReportController::class, 'history'])->name('history');
-    Route::get('/cameras/{id}/download-reports', [ReportController::class, 'downloadCameraReports'])
-    ->name('cameras.downloadReports');
-
-    //Route::get('/history/{camera}/download', [ReportController::class, 'downloadCameraReports'])->name('history.download');
-    //Route::get('/cameras/{id}/download-reports', [ReportController::class, 'downloadCameraReports'])->name('cameras.downloadReports');
-
-
-
+    Route::get('/cameras/{id}/download-reports', [ReportController::class, 'downloadCameraReports'])->name('cameras.downloadReports');
 
     Route::post('/reports/{id}/update-status', [ReportController::class, 'updateStatus'])->name('reports.updateStatus');
+    Route::get('/datos-postes', [DatosPostesController::class, 'index'])->name('datosPostes.index');
 
+    // Rutas de DatosPostes
+    Route::get('/datos-postes', [DatosPostesController::class, 'index'])->name('datosPostes.index');
+    Route::get('/datos-postes/{id}/edit', [DatosPostesController::class, 'edit'])->name('datosPostes.edit');
+    Route::resource('datosPostes', DatosPostesController::class);
+    Route::delete('/datos-postes/{id}', [DatosPostesController::class, 'destroy'])->name('datosPostes.destroy');
+
+    
 });
 
 require __DIR__.'/auth.php';

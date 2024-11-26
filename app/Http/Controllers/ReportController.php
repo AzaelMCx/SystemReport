@@ -113,6 +113,7 @@ class ReportController extends Controller
         $pdf = Pdf::loadView('pdf.camera-reports', compact('camera'));
 
         // Descargar el PDF
+       
         return $pdf->download('Reportes:' . $camera->name . '.pdf');
     }
 }
