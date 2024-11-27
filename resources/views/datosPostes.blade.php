@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Datos de los Postes') }}
+            {{ __('Datos') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,6 @@
         </div>
 
         <script>
-            // Desaparecer el mensaje después de 2 segundos
             setTimeout(function() {
                 document.getElementById('successMessage').style.display = 'none';
             }, 2000);
@@ -21,7 +20,18 @@
 
     <div class="flex justify-center items-center mt-8">
         <div class="w-full max-w-7xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 class="text-white text-lg font-semibold mb-4">Lista de Datos de Postes</h3>
+            <h3 class="text-white text-lg font-semibold mb-4">Lista de Cámaras</h3>
+
+            <!-- Buscador -->
+            <div class="mb-4">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Buscar por nombre..." 
+                    class="w-full p-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onkeyup="filterTable()"
+                />
+            </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse bg-gray-300 text-gray rounded-lg">
@@ -37,7 +47,7 @@
                             <th class="p-3 border-b border-gray-700 text-center">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableBody">
                         @forelse ($datosPostes as $poste)
                             <tr class="hover:bg-white-800 transition duration-200">
                                 <td class="p-3 border-b border-gray-700">{{ $loop->iteration }}</td>
@@ -126,6 +136,21 @@
         function closeEditModal() {
             document.getElementById('editModal').classList.add('hidden');
         }
+
+        // Función para filtrar la tabla por el campo "Nombre"
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const tableBody = document.getElementById('tableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+
+            Array.from(rows).forEach(row => {
+                const nameCell = row.getElementsByTagName('td')[1]; // La segunda celda es "Nombre"
+                if (nameCell) {
+                    const nameValue = nameCell.textContent || nameCell.innerText;
+                    row.style.display = nameValue.toLowerCase().includes(filter) ? '' : 'none';
+                }
+            });
+        }
     </script>
 </x-app-layout>
-

@@ -1,13 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CameraController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DatosPostesController;
 //use App\Http\Controllers\CamerasDataController;
-
-
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -36,7 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/datos-postes/{id}/edit', [DatosPostesController::class, 'edit'])->name('datosPostes.edit');
     Route::resource('datosPostes', DatosPostesController::class);
     Route::delete('/datos-postes/{id}', [DatosPostesController::class, 'destroy'])->name('datosPostes.destroy');
-
+    
+    // Rutas para gestionar usuarios
+    //Route::get('/usuarios/crear', [RegisteredUserController::class, 'create'])->name('users.create'); // Formulario para crear usuarios
+    //Route::post('/usuarios', [RegisteredUserController::class, 'store'])->name('users.store'); // Almacenar nuevo usuario
+    
+    // Ruta para el manejo de Recursos Humanos (RH)
+    Route::get('/rh', [ProfileController::class, 'showRH'])->name('rh');
     
 });
 

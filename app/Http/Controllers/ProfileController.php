@@ -20,6 +20,15 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+    
+    public function showRH(): View
+    {
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Pasar el usuario a la vista RH
+        return view('RH', compact('user'));
+    }
 
     /**
      * Update the user's profile information.
