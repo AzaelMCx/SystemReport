@@ -14,7 +14,7 @@
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
             <div class="flex flex-col items-center mb-6 text-center ">
-                <div><img src="{{ asset('images/icono-user.png') }}" alt="Icono User" class="w-12 h-12 mr-3 flex items-center"></i></div> 
+                <div><img src="{{ asset('images/icono-user.png') }}" alt="Icono User" class="mr flex items-center" style="width: 90px; height: 90px;"> </i></div> 
                 <h3 class="text-lg font-semibold text-gray-300">BIENVENIDO</h3>
                 <p class="text-xl font-bold">{{ Auth::user()->name }}</p>
             </div>
@@ -30,7 +30,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="block py-2 px-4 rounded-lg w-full text-left text-gray-400 hover:bg-red-600 hover:text-white transition duration-300">
-                                <img src="{{ asset('images/icono-logout.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3"> Cerrar sesión
+                                <img src="{{ asset('images/icono-logout.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3"> Logout
                             </button>
                         </form>
                     </li>
@@ -40,7 +40,7 @@
        <!-- busacador de cámaras -->
             <div class="mt-6">
                 <label for="cameraSearch" class="text-gray-400 block text-center mb-2">Busqueda</label>
-                <input type="text" id="cameraSearch" class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition duration-300 text-center" placeholder="Buscar Cámara" onkeyup="searchCamera()" />
+                <input type="text" id="cameraSearch" class="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition duration-300 text-center" placeholder="Busquea en mapa" onkeyup="searchCamera()" />
             </div>
             
         </aside>
