@@ -8,7 +8,11 @@
     <style>
         /* Fondo oscuro con textura */
         body {
-            background: #1a1a2e;
+            background-image: url('images/sesesp.png');
+            background-size: 59% auto;
+            background-repeat: no-repeat;
+            background-position: center;
+            /*background: #1a1a2e;*/
             display: flex;
             align-items: center;
             justify-content: center;
@@ -27,7 +31,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #f0f0f0;
+            color: #f0f0f0e7;
         }
         /* Título */
         .login-header {
@@ -35,7 +39,7 @@
             font-weight: bold;
             text-align: center;
             margin-bottom: 1.5rem;
-            color: #ffd369;
+            color: #3b3d34ab;
         }
         /* Estilos para los inputs */
         .login-card input[type="email"],
@@ -46,7 +50,7 @@
             width: 100%;
             border-radius: 8px;
             margin-bottom: 1rem;
-            color: #ffffff;
+            color: #181b18;
             outline: none;
             transition: background-color 0.3s;
         }
@@ -101,16 +105,18 @@
     </style>
 </head>
 <body>
+
     <div class="login-card">
+
         <div class="login-header">Iniciar Sesion</div>
         
         <form method="POST" action="{{ route('login') }}">
             @csrf
             
-            <label for="email">Correo Electrónico</label>
+            <label for="email" style="color:#1a1a2e57; font-family: 'Arial', sans-serif; font-size: 16px; font-weight: bold;">Correo Electrónico</label>
             <input type="email" id="email" name="email" required autofocus placeholder="Ingresa tu correo">
             
-            <label for="password">Contraseña</label>
+            <label for="password" style="color:#1a1a2e57; font-family: 'Arial', sans-serif; font-size: 16px; font-weight: bold;">Contraseña</label>
             <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
             
             <button type="submit" class="login-button">Iniciar Sesión</button>

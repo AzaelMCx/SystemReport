@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
+       
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Sistema') }}
+            {{ __('Panel Principal') }} 
         </h2>
     </x-slot>
 
@@ -14,18 +15,18 @@
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
             <div class="flex flex-col items-center mb-6 text-center ">
-                <div><img src="{{ asset('images/icono-user.png') }}" alt="Icono User" class="mr flex items-center" style="width: 90px; height: 90px;"> </i></div> 
+                <div><img src="{{ asset('images/icono-user.png') }}" alt="Icono User" class="mr flex items-center" style="width: 100px; height: 100px;"> </i></div> 
                 <h3 class="text-lg font-semibold text-gray-300">BIENVENIDO</h3>
                 <p class="text-xl font-bold">{{ Auth::user()->name }}</p>
             </div>
 
             <nav>
                 <ul class="space-y-4 list-none">
+                    <li><a href="{{ route('rh') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-profile.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3">Perfil</a></li>    
                     <li><a href="{{ route('reports.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-reportes.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3">Reportes</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-notification.png') }}" alt="Icono Notificaciones" class="w-7 h-7 mr-3">Notificaciones</a></li>
                     <li><a href="{{ route('history')}}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-history.png') }}" alt="Icono Historial" class="w-7 h-7 mr-3">Historial</a></li>
                     <li><a href="{{ route('datosPostes.index')}}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Camaras" class="w-7 h-7 mr-3">Camaras</a></li>
-                    <li><a href="{{ route('rh') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-profile.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3">Perfil</a></li>          
+                    <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-notification.png') }}" alt="Icono Notificaciones" class="w-7 h-7 mr-3">Notificaciones</a></li>         
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -49,7 +50,7 @@
         <div class="flex-1 p-6 w-full">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100 text-center">
-                    {{ __("Mapa") }}
+                    {{ __("Mapa Interactivo") }}
                 </div>
             </div>
 
@@ -151,6 +152,7 @@
                 })
                 .addTo(map)
                 .bindPopup('{{ $camera->name }}');
+                
                 
                 markers.push(marker);
             @endforeach

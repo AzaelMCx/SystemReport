@@ -62,7 +62,7 @@
             <!-- Segundo contenedor: Dejado libre para más adelante -->
             <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h3 class="text-white text-lg font-semibold mb-4">Contenedor 2</h3>
-                <p class="text-white">Este es el segundo contenedor. Puedes añadir contenido aquí más adelante según sea necesario.</p>
+                <p class="text-white">Aqui se muestra la informacion del usuario, puedes usar este cotnenedor para mas detalles.</p>
             </div>
 
         </div>

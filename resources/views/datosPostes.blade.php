@@ -82,7 +82,7 @@
     <!-- Modal para editar datos del poste -->
     <div id="editModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 class="text-lg font-semibold mb-4">Editar Datos del Poste</h3>
+            <h3 class="text-lg font-semibold mb-4">Editar datos de camara</h3>
             <form id="editForm" action="{{ route('datosPostes.update', 0) }}" method="POST">
                 @csrf
                 @method('PUT')
