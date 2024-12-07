@@ -6,6 +6,7 @@ use App\Models\Report;
 use App\Models\Camera;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -56,6 +57,7 @@ class ReportController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'date' => $request->date,
+            
         ]);
 
         // Redirigir con mensaje de éxito
@@ -70,15 +72,17 @@ class ReportController extends Controller
         // Validar que el nuevo estado sea 'pendiente' o 'solucionado'
         $request->validate([
             'status' => 'required|in:pendiente,solucionado',
+            'solutions' => 'nullable|string|max:255',
         ]);
 
         // Encontrar el reporte y actualizar su estatus
         $report = Report::findOrFail($id);
         $report->status = $request->status;
+        $report->solutions = $request->solutions;
         $report->save();
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('reports.index')->with('success', 'Estatus del reporte actualizado correctamente');
+        return redirect()->route('reports.index')->with('success', 'Reporte atendido correctamente');
     }
 
     /**

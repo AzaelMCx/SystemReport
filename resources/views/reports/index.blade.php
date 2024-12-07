@@ -14,9 +14,8 @@
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
             <div class="flex flex-col items-center mb-6 text-center ">
-                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="mr flex items-center" style="width: 150px; height: 150px;"></i></div> 
+                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="mr flex items-center" style="width: 150px; height: 150px;"></div> 
                 <h3 class="text-lg font-semibold text-gray-300">Listado de Reportes</h3>
-                
             </div>
 
             <nav>
@@ -34,47 +33,51 @@
                     </li>
                 </ul>
             </nav>
-            
-       <!-- Final de la barra lateral -->
-            
         </aside>
 
-    <div class="p-6">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 text-gray-900 dark:text-gray-100">
-                <h3 class="text-xl font-semibold mb-4">REPORTES</h3>
-                
-                
-                @if(isset($noReportsMessage))
-                    <p class="text-gray-500">{{ $noReportsMessage }}</p>
-                @else
+        <div class="p-6">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="text-xl font-semibold mb-4">REPORTES</h3>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($reports as $report)
-                            <div class="bg-gray-700 rounded-lg shadow-lg p-4" ><img src="{{ asset('images/list-reports.png') }}" alt="Icono Perfil" class="w-11 h-11 mr-3 flex items-center">
-                                <h4 class="text-lg font-bold text-white">{{ $report->camera->name }}</h4>
-                                <p class="text-gray-300 mt-2"><strong>Descripción:</strong> {{ $report->description }}</p>
-                                <p class="text-gray-300 mt-2"><strong>Estatus:</strong> {{ $report->status }}</p>
-                                <p class="text-gray-300 mt-2"><strong>Fecha de reporte:</strong> {{ $report->date }}</p>
+                    @if(isset($noReportsMessage))
+                        <p class="text-gray-500">{{ $noReportsMessage }}</p>
+                    @else
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach($reports as $report)
+                                <div class="bg-gray-700 rounded-lg shadow-lg p-4">
+                                    <img src="{{ asset('images/list-reports.png') }}" alt="Icono Perfil" class="w-11 h-11 mr-3 flex items-center">
+                                    <h4 class="text-lg font-bold text-white">{{ $report->camera->name }}</h4>
+                                    <p class="text-gray-300 mt-2"><strong>Descripción:</strong> {{ $report->description }}</p>
+                                    <p class="text-gray-300 mt-2"><strong>Estatus:</strong> {{ $report->status }}</p>
+                                    <p class="text-gray-300 mt-2"><strong>Fecha de reporte:</strong> {{ $report->date }}</p>
 
-                                <form method="POST" action="{{ route('reports.updateStatus', $report->id) }}" class="mt-3">
-                                    @csrf
-                                    @method('POST')
-                                    <div class="flex items-center space-x-2">
-                                        <select name="status" class="bg-white-800 text-gray rounded-lg px-3 py-2">
-                                            <option value="pendiente" {{ $report->status == 'pendiente' ? 'selected' : '' }} style="color: gray;">Pendiente</option>
-                                            <option value="solucionado" {{ $report->status == 'solucionado' ? 'selected' : '' }} style="color: gray;">Solucionado</option>
-                                        </select>
-                                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Atender</button>
-                                    </div>
-                                </form>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
+                                    <!-- Formulario para actualizar estado y añadir solución -->
+                                    <form method="POST" action="{{ route('reports.updateStatus', $report->id) }}" class="mt-3 space-y-4">
+                                        @csrf
+                                        @method('POST')
+                                        <!-- Contenedor para la descripción de la solución -->
+                                        <div>
+                                            <label for="solutions-{{ $report->id }}" class="block text-gray-100 text-sm font-medium mb-1">Descripción de la solución</label>
+                                            <textarea id="solutions-{{ $report->id }}" name="solutions" rows="3" class="w-full px-3 py-2 bg-white-600 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition duration-300">{{ old('solutions', $report->solutions) }}</textarea>
+                                        </div>
+
+                                        <div class="flex items-center space-x-2">
+                                            <select name="status" class="bg-white-800 text-gray rounded-lg px-3 py-2">
+                                                <option value="pendiente" {{ $report->status == 'pendiente' ? 'selected' : '' }} style="color: gray;">Pendiente</option>
+                                                <option value="solucionado" {{ $report->status == 'solucionado' ? 'selected' : '' }} style="color: gray;">Solucionado</option>
+                                            </select>
+                                            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Atender</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
 
-    
+    </div>
 </x-app-layout>
+

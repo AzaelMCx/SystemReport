@@ -14,7 +14,14 @@ class Report extends Model
         'description',
         'status',
         'date',
+        'solutions',
+        
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Relación con el modelo Camera.

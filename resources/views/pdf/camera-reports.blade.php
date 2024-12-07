@@ -98,7 +98,9 @@
             @foreach($camera->reports as $report)
             <div class="report-card">
                 <h4>Reporte: {{ $report->description }}</h4>
-                <p><strong>Fecha:</strong> {{ $report->date }}</p>
+                <p><strong>Fecha de reportes:</strong> {{ $report->date }}</p>
+                <p><strong>Fecha de solucion:</strong> {{ $report->updated_at }}</p>
+                <p><strong>Solucion:</strong> {{ $report->solutions }}</p>
                 <p><strong>Estatus:</strong> <span class="status">{{ ucfirst($report->status) }}</span></p>
             </div>
             @endforeach
