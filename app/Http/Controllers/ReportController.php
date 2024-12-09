@@ -15,15 +15,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        // Traemos los reportes con la cámara asociada solo con el estado 'pendiente'
         $reports = Report::with('camera')->where('status', 'pendiente')->get();
-        
-        // Verificamos si existen reportes pendientes, si no, enviamos el mensaje correspondiente
-        if ($reports->isEmpty()) {
-            $noReportsMessage = 'No hay reportes pendientes';
-        } else {
-            $noReportsMessage = null;
-        }
+        $noReportsMessage = $reports->isEmpty() ? 'No hay reportes pendientes' : null;
 
         return view('reports.index', compact('reports', 'noReportsMessage'));
     }
@@ -33,7 +26,6 @@ class ReportController extends Controller
      */
     public function create()
     {
-        // Traemos las cámaras disponibles
         $cameras = Camera::all();
         return view('reports.create', compact('cameras'));
     }
@@ -43,7 +35,6 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        // Validación de los datos del formulario
         $request->validate([
             'camera_id' => 'required|exists:cameras,id',
             'description' => 'required|string|max:255',
@@ -51,17 +42,29 @@ class ReportController extends Controller
             'date' => 'required|date',
         ]);
 
-        // Crear el nuevo reporte
         Report::create([
             'camera_id' => $request->camera_id,
             'description' => $request->description,
             'status' => $request->status,
             'date' => $request->date,
-            
+            'usereport' => Auth::user()->name,
         ]);
 
-        // Redirigir con mensaje de éxito
         return redirect()->route('dashboard')->with('success', 'Reporte creado correctamente');
+    }
+
+    /**
+     * Muestra el panel principal con estadísticas de reportes.
+     */
+    public function dashboard()
+    {
+        $cameras = Camera::with('reports')->get();
+
+        // Totales de reportes
+        $pendingReportsCount = Report::where('status', 'Pendiente')->count();
+        $refaccionamientoReportsCount = Report::where('status', 'Refaccionamiento')->count();
+
+        return view('dashboard', compact('cameras', 'pendingReportsCount', 'refaccionamientoReportsCount'));
     }
 
     /**
@@ -69,19 +72,16 @@ class ReportController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
-        // Validar que el nuevo estado sea 'pendiente' o 'solucionado'
         $request->validate([
-            'status' => 'required|in:pendiente,solucionado',
+            'status' => 'required|in:pendiente,solucionado,refaccionamiento',
             'solutions' => 'nullable|string|max:255',
         ]);
 
-        // Encontrar el reporte y actualizar su estatus
         $report = Report::findOrFail($id);
         $report->status = $request->status;
         $report->solutions = $request->solutions;
         $report->save();
 
-        // Redirigir con mensaje de éxito
         return redirect()->route('reports.index')->with('success', 'Reporte atendido correctamente');
     }
 
@@ -90,9 +90,8 @@ class ReportController extends Controller
      */
     public function history()
     {
-        // Traemos las cámaras con sus reportes solucionados
         $cameras = Camera::with(['reports' => function ($query) {
-            $query->solucionados(); // Usamos el scope para solo traer los reportes solucionados
+            $query->solucionados();
         }])->get();
 
         return view('history', compact('cameras'));
@@ -103,22 +102,16 @@ class ReportController extends Controller
      */
     public function downloadCameraReports($cameraId)
     {
-        // Obtener la cámara y sus reportes solucionados
         $camera = Camera::with(['reports' => function ($query) {
             $query->solucionados();
         }])->findOrFail($cameraId);
 
-        // Verificar si la cámara tiene reportes solucionados
         if ($camera->reports->isEmpty()) {
             return redirect()->route('history')->with('error', 'Esta cámara no tiene reportes solucionados.');
         }
 
-        // Generar el PDF con la información
         $pdf = Pdf::loadView('pdf.camera-reports', compact('camera'));
 
-        // Descargar el PDF
-       
         return $pdf->download('Reportes:' . $camera->name . '.pdf');
     }
 }
-

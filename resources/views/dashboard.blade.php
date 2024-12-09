@@ -25,6 +25,7 @@
                 <ul class="space-y-4 list-none">
                     <li><a href="{{ route('rh') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-profile.png') }}" alt="Icono Perfil" class="w-7 h-7 mr-3">Perfil</a></li>
                     <li><a href="{{ route('reports.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-reportes.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3">Reportes</a></li>
+                    <li><a href="{{ route('refaccionamiento') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-repair.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3">Refaccionamiento</a></li>
                     <li><a href="{{ route('history')}}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-history.png') }}" alt="Icono Historial" class="w-7 h-7 mr-3">Historial</a></li>
                     <li><a href="{{ route('datosPostes.index')}}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Camaras" class="w-7 h-7 mr-3">Cámaras</a></li>
                     <li><a href="#" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-notification.png') }}" alt="Icono Notificaciones" class="w-7 h-7 mr-3">Notificaciones</a></li>
@@ -55,7 +56,14 @@
             </div>
 
             <!-- Contenedor para el mapa -->
-            <div class="flex justify-center items-center mt-8">
+            <div class="flex justify-center items-start mt-8">
+                <!-- Contenedor de estadísticas -->
+                <div class="bg-gray-800 text-white rounded-lg shadow-lg p-4 mr-4 w-1/5">
+                    <h3 class="text-lg font-bold text-center mb-4">Estadísticas</h3>
+                    <p class="text-center"><strong>Pendientes:</strong> {{ $pendingReportsCount }}</p>
+                    <p class="text-center"><strong>Refacciones:</strong> {{ $refaccionamientoReportsCount }}</p>
+                </div>
+                <!-- Contenedor del mapa -->
                 <div class="bg-gray-800 rounded-lg shadow-lg w-full md:w-3/4 lg:w-3/5 h-80 sm:h-96">
                     <div id="map" class="w-full h-full rounded-lg"></div>
                 </div>
@@ -104,7 +112,10 @@
                         </div>
                         <div>
                             <label for="status" class="text-gray-400">Estatus</label>
-                            <input type="text" id="status" name="status" class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:ring-indigo-600" value="Pendiente" readonly>
+                            <select id="status" name="status" class="w-full px-4 py-3 bg-white-700 text-gray rounded-lg focus:ring-indigo-600" required>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Refaccionamiento">Refaccionamiento</option>
+                            </select>
                         </div>
                         <div>
                             <label for="date" class="text-gray-400">Fecha</label>
@@ -150,7 +161,6 @@
                         <span class="text-red-500">Reporte pendiente</span><br/>
                         <strong>Descripción:</strong> {{ Str::limit($report->description, 100) }}<br/>
                         <strong>Fecha del Reporte:</strong> {{ \Carbon\Carbon::parse($report->date)->format('d/m/Y') }}<br/>
-                        
                     @else
                         <span class="text-green-500">Sin Reportes Pendientes</span>
                     @endif
@@ -180,3 +190,4 @@
         });
     </script>
 </x-app-layout>
+

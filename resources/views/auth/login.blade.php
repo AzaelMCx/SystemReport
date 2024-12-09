@@ -12,7 +12,6 @@
             background-size: 59% auto;
             background-repeat: no-repeat;
             background-position: center;
-            /*background: #1a1a2e;*/
             display: flex;
             align-items: center;
             justify-content: center;
@@ -43,7 +42,8 @@
         }
         /* Estilos para los inputs */
         .login-card input[type="email"],
-        .login-card input[type="password"] {
+        .login-card input[type="password"],
+        .login-card input[type="text"] {
             background-color: rgba(255, 255, 255, 0.2);
             border: none;
             padding: 0.75rem;
@@ -55,12 +55,13 @@
             transition: background-color 0.3s;
         }
         .login-card input[type="email"]:focus,
-        .login-card input[type="password"]:focus {
+        .login-card input[type="password"]:focus,
+        .login-card input[type="text"]:focus {
             background-color: rgba(255, 255, 255, 0.3);
         }
         /* Botón de inicio de sesión */
         .login-button {
-            background-color: #ffd369;
+            background-color: #3d39309a;
             border: none;
             color: #1a1a2e;
             font-weight: bold;
@@ -75,7 +76,7 @@
         }
         /* Botón de registro */
         .register-button {
-            background-color: #4CAF50;
+            background-color: #3d39309a;
             border: none;
             color: #ffffff;
             font-weight: bold;
@@ -102,6 +103,24 @@
         .login-footer a:hover {
             text-decoration: underline;
         }
+        /* Contenedor de contraseña con ícono */
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .password-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: #3b3d34ab;
+        }
     </style>
 </head>
 <body>
@@ -114,10 +133,22 @@
             @csrf
             
             <label for="email" style="color:#1a1a2e57; font-family: 'Arial', sans-serif; font-size: 16px; font-weight: bold;">Correo Electrónico</label>
-            <input type="email" id="email" name="email" required autofocus placeholder="Ingresa tu correo">
+            <input type="email" id="email" name="email" required autofocus placeholder="Email">
             
             <label for="password" style="color:#1a1a2e57; font-family: 'Arial', sans-serif; font-size: 16px; font-weight: bold;">Contraseña</label>
-            <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
+            <div class="password-container">
+                <input type="password" id="password" name="password" required placeholder="Password">
+                <button type="button" class="password-toggle" onclick="togglePasswordVisibility()">
+                    <!-- Ícono de mostrar -->
+                    <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 4c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm0 2c-3.308 0-6 2.692-6 6s2.692 6 6 6 6-2.692 6-6-2.692-6-6-6zM12 9c.26 0 .52.098.707.293.187.195.293.453.293.707s-.106.512-.293.707c-.187.195-.447.293-.707.293s-.52-.098-.707-.293c-.187-.195-.293-.453-.293-.707s.106-.512.293-.707c.187-.195.447-.293.707-.293z"/>
+                    </svg>
+                    <!-- Ícono de ocultar -->
+                    <svg id="icon-eye-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M12 4c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm3.707 6.707c.195.187.293.447.293.707s-.098.52-.293.707l-5 5c-.195.195-.453.293-.707.293s-.512-.098-.707-.293l-1-1c-.195-.195-.293-.453-.293-.707s.098-.52.293-.707l5-5c.195-.195.453-.293.707-.293s.52.098.707.293l1 1z"/>
+                    </svg>
+                </button>
+            </div>
             
             <button type="submit" class="login-button">Iniciar Sesión</button>
         </form>
@@ -131,6 +162,23 @@
             <p>¿Olvidaste tu contraseña? <a href="{{ route('password.request') }}">Recuperarla</a></p>
         </div>
     </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const iconEye = document.getElementById('icon-eye');
+            const iconEyeOff = document.getElementById('icon-eye-off');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                iconEye.style.display = 'none';
+                iconEyeOff.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                iconEye.style.display = 'block';
+                iconEyeOff.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
-

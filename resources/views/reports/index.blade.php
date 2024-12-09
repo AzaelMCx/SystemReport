@@ -14,7 +14,7 @@
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
             <div class="flex flex-col items-center mb-6 text-center ">
-                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="mr flex items-center" style="width: 150px; height: 150px;"></div> 
+                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="w-36 h-36 rounded-full"></div> 
                 <h3 class="text-lg font-semibold text-gray-300">Listado de Reportes</h3>
             </div>
 
@@ -51,6 +51,7 @@
                                     <p class="text-gray-300 mt-2"><strong>Descripción:</strong> {{ $report->description }}</p>
                                     <p class="text-gray-300 mt-2"><strong>Estatus:</strong> {{ $report->status }}</p>
                                     <p class="text-gray-300 mt-2"><strong>Fecha de reporte:</strong> {{ $report->date }}</p>
+                                    <p class="text-gray-300 mt-2"><strong>Generado por:</strong> {{ $report->usereport }}</p>
 
                                     <!-- Formulario para actualizar estado y añadir solución -->
                                     <form method="POST" action="{{ route('reports.updateStatus', $report->id) }}" class="mt-3 space-y-4">

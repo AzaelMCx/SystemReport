@@ -14,7 +14,7 @@
         <!-- Menu lateral -->
         <aside :class="{'block': open, 'hidden': !open}" class="lg:block w-64 bg-gray-900 text-white min-h-screen p-4 shadow-md">
             <div class="flex flex-col items-center mb-6 text-center ">
-                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="mr flex items-center" style="width: 150px; height: 150px;"></div> 
+                <div><img src="{{ asset('images/icono-pages.png') }}" alt="Icono User" class="w-36 h-36 rounded-full"></div> 
                 <h3 class="text-lg font-semibold text-gray-300">Historial</h3>
             </div>
 

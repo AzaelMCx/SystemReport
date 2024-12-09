@@ -15,6 +15,7 @@ class Report extends Model
         'status',
         'date',
         'solutions',
+        'usereport',
         
     ];
 
