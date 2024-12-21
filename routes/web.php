@@ -35,9 +35,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/rh', [ProfileController::class, 'showRH'])->name('rh');
 
     // Ruta para refaccionamientos
-    Route::get('/refaccionamiento', function () {
-        return view('refaccionamiento');
-    })->name('refaccionamiento');
+    Route::get('/refaccionamiento', [ReportController::class, 'refaccionamiento'])->name('refaccionamiento');
+
 });
 
 require __DIR__.'/auth.php';

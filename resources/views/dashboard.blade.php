@@ -58,10 +58,14 @@
             <!-- Contenedor para el mapa -->
             <div class="flex justify-center items-start mt-8">
                 <!-- Contenedor de estadísticas -->
-                <div class="bg-gray-800 text-white rounded-lg shadow-lg p-4 mr-4 w-1/5">
-                    <h3 class="text-lg font-bold text-center mb-4">Estadísticas</h3>
-                    <p class="text-center"><strong>Pendientes:</strong> {{ $pendingReportsCount }}</p>
-                    <p class="text-center"><strong>Refacciones:</strong> {{ $refaccionamientoReportsCount }}</p>
+                <div class="bg-gray-800 text-white rounded-lg shadow-lg p-4 mr-4 w-1/6">
+                    <h3 class="text-sm font-bold">ESTADISTICAS</h3>
+                    <p class="text-sm text-center"><strong>Atencion:</strong> {{ $pendingReportsCount }}</p>
+                    <p class="text-sm text-center"><strong>Refacciones:</strong> {{ $refaccionamientoReportsCount }}</p>
+                    <h3 class="text-sm font-bold">SIMBOLOGIA</h3>
+                    <p class="text-sm text-center"><strong>Correcto   <img src="{{ asset('images/green-marker.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3"></strong>
+                    <p class="text-sm text-center"><strong>Atencion  <img src="{{ asset('images/yellow-marker.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3"></strong>
+                    <p class="text-sm text-center"><strong>Refaccion  <img src="{{ asset('images/red-marker.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3"></strong>
                 </div>
                 <!-- Contenedor del mapa -->
                 <div class="bg-gray-800 rounded-lg shadow-lg w-full md:w-3/4 lg:w-3/5 h-80 sm:h-96">
@@ -79,6 +83,10 @@
                         <div>
                             <label for="name" class="text-gray-400">Nombre de la cámara</label>
                             <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg" required>
+                        </div>
+                        <div>
+                            <label for="location" class="text-gray-400">Municipio</label>
+                            <input type="text" id="location" name="location" class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg" required>
                         </div>
                         <div>
                             <label for="latitude" class="text-gray-400">Latitud</label>
@@ -146,10 +154,11 @@
             @foreach ($cameras as $camera)
                 @php
                     $report = $camera->reports->where('status', 'Pendiente')->first();
+                    $refaccionamientoReport = $camera->reports->firstWhere('status', 'Refaccionamiento');
                 @endphp
                 var marker = L.marker([{{ $camera->latitude }}, {{ $camera->longitude }}], {
                     icon: L.icon({
-                        iconUrl: '{{ $report ? asset('images/red-marker.png') : asset('images/green-marker.png') }}',
+                        iconUrl: '{{ $report ? asset('images/yellow-marker.png') : ($refaccionamientoReport ? asset('images/red-marker.png') : asset('images/green-marker.png')) }}',
                         iconSize: [40, 40],
                         iconAnchor: [12, 12],
                         popupAnchor: [0, -10]
@@ -158,9 +167,13 @@
                 .bindPopup(`
                     <strong>{{ $camera->name }}</strong><br/>
                     @if($report)
-                        <span class="text-red-500">Reporte pendiente</span><br/>
+                        <span class="text-red-500">Atencion</span><br/>
                         <strong>Descripción:</strong> {{ Str::limit($report->description, 100) }}<br/>
                         <strong>Fecha del Reporte:</strong> {{ \Carbon\Carbon::parse($report->date)->format('d/m/Y') }}<br/>
+                    @elseif($refaccionamientoReport)
+                        <span class="text-yellow-500">Espera Refacciónnamiento</span><br/>
+                        <strong>Descripción:</strong> {{ Str::limit($refaccionamientoReport->description, 100) }}<br/>
+                        <strong>Fecha del Reporte:</strong> {{ \Carbon\Carbon::parse($refaccionamientoReport->date)->format('d/m/Y') }}<br/>
                     @else
                         <span class="text-green-500">Sin Reportes Pendientes</span>
                     @endif

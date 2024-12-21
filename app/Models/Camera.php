@@ -12,6 +12,7 @@ class Camera extends Model
     // Especificamos qué campos se pueden llenar masivamente
     protected $fillable = [
         'name',       // Nombre de la cámara
+        'location',   // Ubicación de la cámara
         'latitude',   // Latitud de la cámara
         'longitude',  // Longitud de la cámara
     ];

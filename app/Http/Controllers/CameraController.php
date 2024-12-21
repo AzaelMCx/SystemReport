@@ -26,6 +26,7 @@ class CameraController extends Controller
         // Validación de los datos del formulario
         $request->validate([
             'name' => 'required|string|max:255',
+            'location' => 'nullable|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
@@ -33,6 +34,7 @@ class CameraController extends Controller
         // Crear y almacenar la cámara
         Camera::create([
             'name' => $request->name,
+            'location' => $request->location,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);

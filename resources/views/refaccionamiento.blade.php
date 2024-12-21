@@ -50,11 +50,60 @@
         </aside>
 
         <!-- Contenido principal -->
-        <div class="flex-1 p-6 text-gray-900 dark:text-gray-100">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <p class="text-center text-gray-500">Vista de refaccionamiento lista para añadir elementos en el futuro.</p>
+        <div class="flex-1 p-6 text-gray-700 dark:text-gray-100">
+            <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+                @if($noReportsMessage)
+                    <p class="text-center text-gray-500">{{ $noReportsMessage }}</p>
+                @else
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($reports as $report)
+                            <div class="bg-gray-800 text-white rounded-lg shadow-lg p-4">
+                                <h3 class="text-lg font-bold mb-2">{{ $report->camera->name }}</h3>
+                                <p><strong>Descripción:</strong> {{ $report->description }}</p>
+                                <p><strong>Fecha:</strong> {{ \Carbon\Carbon::parse($report->date)->format('d/m/Y') }}</p>
+                                <p><strong>Usuario:</strong> {{ $report->usereport }}</p>
+
+                                <!-- Formulario para cambiar estatus -->
+                                <form method="POST" action="{{ route('reports.updateStatus', $report->id) }}" class="mt-4">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="status" class="text-sm text-gray-400">Cambiar Estatus:</label>
+                                        <select id="status" name="status" class="w-full px-3 py-2 bg-white-700 text-gray rounded-lg focus:ring-indigo-600" required>
+                                            <option value="pendiente" {{ $report->status == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                            <option value="solucionado" {{ $report->status == 'solucionado' ? 'selected' : '' }}>Solucionado</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Campo para añadir solución -->
+                                    <div class="mb-3">
+                                        <label for="solutions" class="text-sm text-gray-400">Atención:</label>
+                                        <textarea id="solutions" name="solutions" rows="2" class="w-full px-3 py-2 bg--700 text-black rounded-lg focus:ring-indigo-600" placeholder="Descripción de la atención">{{ $report->solutions }}</textarea>
+                                    </div>
+
+                                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                                        Guardar Cambios
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-</x-app-layout>
 
+    <!-- Integrar SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('success'))
+                Swal.fire({
+                    title: "¡Éxito!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "Aceptar"
+                });
+            @endif
+        });
+    </script>
+</x-app-layout>

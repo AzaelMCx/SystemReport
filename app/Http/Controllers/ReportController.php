@@ -82,7 +82,8 @@ class ReportController extends Controller
         $report->solutions = $request->solutions;
         $report->save();
 
-        return redirect()->route('reports.index')->with('success', 'Reporte atendido correctamente');
+        return back()->with('success', 'Reporte actualizado correctamente.');
+
     }
 
     /**
@@ -114,4 +115,16 @@ class ReportController extends Controller
 
         return $pdf->download('Reportes:' . $camera->name . '.pdf');
     }
+
+    public function refaccionamiento()
+    {
+    // Obtener los reportes con el estatus "Refaccionamiento"
+         $reports = Report::with('camera')->where('status', 'Refaccionamiento')->get();
+
+    // Verificar si hay reportes
+        $noReportsMessage = $reports->isEmpty() ? 'No hay reportes con estatus Refaccionamiento' : null;
+
+    return view('refaccionamiento', compact('reports', 'noReportsMessage'));
+   }
+
 }

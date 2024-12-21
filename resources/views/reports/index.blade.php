@@ -78,6 +78,21 @@
                 </div>
             </div>
         </div>
+        
+    <!-- Integrar SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('success'))
+                Swal.fire({
+                    title: "¡Éxito!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "Aceptar"
+                });
+            @endif
+        });
+    </script>
 
     </div>
 </x-app-layout>
