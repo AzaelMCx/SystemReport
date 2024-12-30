@@ -37,6 +37,13 @@ Route::middleware('auth', 'verified')->group(function () {
     // Ruta para refaccionamientos
     Route::get('/refaccionamiento', [ReportController::class, 'refaccionamiento'])->name('refaccionamiento');
 
+    //Rutas camaras
+    Route::get('/popups', [CameraController::class, 'showPopupList'])->name('popups.index');
+    Route::get('/cameras/{id}/edit', [CameraController::class, 'edit'])->name('cameras.edit');
+    Route::put('/cameras/{id}', [CameraController::class, 'update'])->name('cameras.update');
+    Route::delete('/cameras/{id}', [CameraController::class, 'destroy'])->name('cameras.destroy');
+    
+
 });
 
 require __DIR__.'/auth.php';
