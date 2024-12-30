@@ -28,7 +28,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('datosPostes.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center">
+                        <a href="{{ route('popups.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center">
                             <img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Camaras" class="w-7 h-7 mr-3">Cámaras
                         </a>
                     </li>

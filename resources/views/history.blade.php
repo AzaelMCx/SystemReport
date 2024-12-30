@@ -21,7 +21,7 @@
             <nav>
                 <ul class="space-y-4 list-none">
                     <li><a href="{{ route('reports.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-reportes.png') }}" alt="Icono Reportes" class="w-7 h-7 mr-3">Reportes</a></li>
-                    <li><a href="{{ route('datosPostes.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Cámaras" class="w-7 h-7 mr-3">Cámaras</a></li>
+                    <li><a href="{{ route('popups.index') }}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-cameras.png') }}" alt="Icono Cámaras" class="w-7 h-7 mr-3">Cámaras</a></li>
                     <li><a href="{{ route('dashboard')}}" class="block py-2 px-4 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition duration-300 flex items-center"><img src="{{ asset('images/icono-home.png') }}" alt="Icono Home" class="w-7 h-7 mr-3">Home</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
